@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E9453D52163713300D445BD /* DataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9453D42163713300D445BD /* DataSet.swift */; };
 		4E98EF082162804E001C8234 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98EF072162804E001C8234 /* AppDelegate.swift */; };
 		4E98EF0D2162804E001C8234 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E98EF0B2162804E001C8234 /* Main.storyboard */; };
 		4E98EF0F21628051001C8234 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E98EF0E21628051001C8234 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E9453D42163713300D445BD /* DataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSet.swift; sourceTree = "<group>"; };
 		4E98EF042162804E001C8234 /* GitHub API Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GitHub API Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E98EF072162804E001C8234 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E98EF0C2162804E001C8234 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				4E98EF2121629AD6001C8234 /* PageCell.swift */,
 				4E98EF1F21629AD6001C8234 /* SwipingController.swift */,
 				4E98EF2021629AD6001C8234 /* SwipingController+UICollectionView.swift */,
+				4E9453D42163713300D445BD /* DataSet.swift */,
 				4E98EF282162ADDB001C8234 /* Extension.swift */,
 				4E98EF0B2162804E001C8234 /* Main.storyboard */,
 				4E98EF0E21628051001C8234 /* Assets.xcassets */,
@@ -152,6 +155,7 @@
 				4E98EF2221629AD6001C8234 /* Page.swift in Sources */,
 				4E98EF292162ADDB001C8234 /* Extension.swift in Sources */,
 				4E98EF2521629AD6001C8234 /* PageCell.swift in Sources */,
+				4E9453D52163713300D445BD /* DataSet.swift in Sources */,
 				4E98EF2321629AD6001C8234 /* SwipingController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

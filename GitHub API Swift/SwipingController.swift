@@ -1,22 +1,16 @@
 //
 //  SwipingController.swift
-//  autolayout_lbta
+//  GitHub API Swift
 //
-//  Created by Brian Voong on 10/12/17.
-//  Copyright © 2017 Lets Build That App. All rights reserved.
+//  Created by Andreas Velounias on 01/10/2018.
+//  Copyright © 2018 Andreas Velounias. All rights reserved.
 //
 
 import UIKit
 
 class SwipingController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let pages = [
-        Page(headerText: "Qured\n\nWelcome to the new\n\nHome Healthcare", imageURL: "https://avatars0.githubusercontent.com/u/1120569?v=4"),
-        Page(headerText: "Book a Doctor\n\nPhysiotherapist\n\nOr Phone Consultation", imageURL: "none"),
-        Page(headerText: "Healthcare to your door\n\n7 days a week\n\nAt Home or at Work", imageURL: "none"),
-        Page(headerText: "Healthcare for you\n\nAnd your family", imageURL: "none"),
-        Page(headerText: "Available\n\nthroughout\n\nGreater London", imageURL: "none")
-    ]
+    var pageArray = [Page]()
     
     private let previousButton: UIButton = {
         let button = UIButton(type: .system)
@@ -57,7 +51,7 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
     
     @objc private func handleNext() {
         
-        if pageControl.currentPage == pages.count - 2 {
+        if pageControl.currentPage == pageArray.count - 2 {
             nextButton.setTitle("Finish", for: .normal)
         }
         else {
@@ -69,7 +63,7 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
 //            self.present(destVC!, animated: true, completion: nil)
         }
         else {
-            let nextIndex = min(pageControl.currentPage + 1, pages.count - 1)
+            let nextIndex = min(pageControl.currentPage + 1, pageArray.count - 1)
             let indexPath = IndexPath(item: nextIndex, section: 0)
             pageControl.currentPage = nextIndex
             collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -79,7 +73,7 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
     private lazy var pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.currentPage = 0
-        pc.numberOfPages = pages.count
+        pc.numberOfPages = pageArray.count
         pc.currentPageIndicatorTintColor = UIColor.cyan
         pc.pageIndicatorTintColor = UIColor.blue
         pc.isHidden = true
@@ -88,7 +82,7 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
     
     fileprivate func checkIfLastPage() -> Bool {
         
-        if pageControl.currentPage == pages.count - 1 {
+        if pageControl.currentPage == pageArray.count - 1 {
             return true
         }
         else {
@@ -138,6 +132,11 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        DataSet().getData {
+            pages in pages
+            self.pageArray = pages
+        }
+        
         self.view.layer.insertSublayer(gradientLayer, at: 0)
         
         setupBottomControls()
@@ -147,86 +146,5 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
         collectionView?.isPagingEnabled = true
         collectionView?.showsHorizontalScrollIndicator = false
         
-        let jsonURL = URL(string: "https://api.github.com/repos/apple/swift/git/refs/heads/master")!
-        jsonURL.asyncDownload { data, response, error in
-            guard
-                let data = data,
-                let dict = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
-                let object = dict["object"] as? NSDictionary,
-                let url = URL(string: object["url"] as! String)
-                else {
-                    print("error:", error ?? "nil")
-                    return
-            }
-            DispatchQueue.main.async {
-                url.asyncDownload { data, response, error in
-                    guard
-                        let data = data,
-                        let dict = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
-                        let object = dict["tree"] as? NSDictionary,
-                        var urlString = object["url"] as? String
-                        else {
-                            print("error:", error ?? "nil")
-                            return
-                    }
-                    DispatchQueue.main.async {
-                        urlString.append("?recursive=1")
-                        let url = URL(string: urlString)
-                        
-                        url!.asyncDownload { data, response, error in
-                            guard
-                                let data = data,
-                                let dict = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
-                                let object = dict["tree"] as? [NSDictionary]
-                                else {
-                                    print("error:", error ?? "nil")
-                                    return
-                            }
-                            DispatchQueue.main.async {
-                                
-                                var urlCommit = "https://api.github.com/repos/apple/swift/commits?path="
-                                urlCommit.append((object.first!["path"] as? String)!)
-
-                                URL(string: urlCommit)?.asyncDownload { data, response, error in
-                                    guard
-                                        let dataCommit = data,
-                                        let dictCommit = (try? JSONSerialization.jsonObject(with: dataCommit)) as? [[String: Any]],
-                                        let author = dictCommit[0]["author"] as? [String: Any],
-                                        let commit = dictCommit[0]["commit"] as? [String: Any],
-                                    let authorName = commit["author"] as? [String: Any]
-                                        else {
-                                            print("error:", error ?? "nil")
-                                            return
-                                    }
-                                    DispatchQueue.main.async {
-                                        print(authorName["name"])
-//                                        print(author!["avatar_url"]!) URL FOR IMAGE
-                                    }
-                                }
-                                
-//                                for o in object {
-//                                    urlCommit.append((o["path"] as? String)!)
-//                                    print(urlCommit)
-//
-//                                    URL(string: urlCommit)?.asyncDownload { data, response, error in
-//                                        guard
-//                                            let data = data,
-//                                            let dictCommit = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
-////                                            let object = dict["tree"] as? [NSDictionary]
-//                                            else {
-//                                                print("error:", error ?? "nil")
-//                                                return
-//                                        }
-//                                        DispatchQueue.main.async {
-//                                            print(dictCommit)
-//                                        }
-//                                    }
-//                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }

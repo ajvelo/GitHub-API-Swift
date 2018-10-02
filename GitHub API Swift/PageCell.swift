@@ -1,9 +1,9 @@
 //
 //  PageCell.swift
-//  autolayout_lbta
+//  GitHub API Swift
 //
-//  Created by Brian Voong on 10/12/17.
-//  Copyright © 2017 Lets Build That App. All rights reserved.
+//  Created by Andreas Velounias on 01/10/2018.
+//  Copyright © 2018 Andreas Velounias. All rights reserved.
 //
 
 import UIKit
@@ -21,9 +21,9 @@ class PageCell: UICollectionViewCell {
                 view.removeFromSuperview()
             }
             
-            let imageView = addImages(imageURL: unwrappedPage.imageURL)
-            
-            let attributedText = NSMutableAttributedString(string: unwrappedPage.headerText, attributes: [NSAttributedStringKey.font: UIFont(name: "AvenirNextCondensed-Medium", size: 22.0)!])
+            let imageView = addImages(imageURL: unwrappedPage.image)
+
+            let attributedText = NSMutableAttributedString(string: unwrappedPage.name, attributes: [NSAttributedStringKey.font: UIFont(name: "AvenirNextCondensed-Medium", size: 18.0)!])
             attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: attributedText.length))
             
             descriptionTextView.attributedText = attributedText

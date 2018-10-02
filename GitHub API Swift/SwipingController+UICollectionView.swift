@@ -1,9 +1,9 @@
 //
 //  SwipingController+UICollectionView.swift
-//  autolayout_lbta
+//  GitHub API Swift
 //
-//  Created by Brian Voong on 10/27/17.
-//  Copyright © 2017 Lets Build That App. All rights reserved.
+//  Created by Andreas Velounias on 01/10/2018.
+//  Copyright © 2018 Andreas Velounias. All rights reserved.
 //
 
 import UIKit
@@ -15,13 +15,13 @@ extension SwipingController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pages.count
+        return pageArray.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! PageCell
         
-        let page = pages[indexPath.item]
+        let page = pageArray[indexPath.item]
         cell.page = page
         return cell
     }
