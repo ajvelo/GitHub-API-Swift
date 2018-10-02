@@ -132,12 +132,11 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DataSet().getData {
-            pages in pages
-            self.pageArray = pages
-        }
+        DataSet().getData(completionHandler: {array in
+            self.pageArray = array
+        })
         
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        view.layer.insertSublayer(self.gradientLayer, at: 0)
         
         setupBottomControls()
         
@@ -145,6 +144,5 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
         
         collectionView?.isPagingEnabled = true
         collectionView?.showsHorizontalScrollIndicator = false
-        
     }
 }

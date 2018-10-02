@@ -1,17 +1,19 @@
 //
 //  Page.swift
-//  autolayout_lbta
+//  GitHub API Swift
 //
-//  Created by Brian Voong on 10/13/17.
-//  Copyright © 2017 Lets Build That App. All rights reserved.
+//  Created by Andreas Velounias on 01/10/2018.
+//  Copyright © 2018 Andreas Velounias. All rights reserved.
 //
 
 import Foundation
 
+
 struct Page {
-    
-    let headerText: String
-    let imageURL: String
+
+    let name: String
+//    let date: String
+//    let message: String
+    let image: String
+//    let path: String
 }
-
-

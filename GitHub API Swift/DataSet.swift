@@ -52,29 +52,33 @@ class DataSet {
                                     print("error:", error ?? "nil")
                                     return
                             }
-                            DispatchQueue.main.async {
+//                            let group = DispatchGroup()
+                            
+                            for o in object {
                                 
-                                for o in object {
-                                    
-                                    var urlCommit = "https://api.github.com/repos/apple/swift/commits?path="
-                                    urlCommit.append((o["path"] as? String)!)
-                                    
-                                    URL(string: urlCommit)?.asyncDownload { data, response, error in
-                                        guard
-                                            let dataCommit = data,
-                                            let dictCommit = (try? JSONSerialization.jsonObject(with: dataCommit)) as? [[String: Any]],
-                                            let author = dictCommit[0]["author"] as? [String: Any],
-                                            let commit = dictCommit[0]["commit"] as? [String: Any],
-                                            let authorName = commit["author"] as? [String: Any]
-                                            else {
-                                                print("error:", error ?? "nil")
-                                                return
-                                        }
-                                        let page = Page(name: authorName["name"]! as! String + "\n" + self.getDate(isoDate: authorName["date"] as! String)!
-                                                        + "\n" + commit["message"]! as! String + "\n" +  o["path"]! as! String, image: author["avatar_url"]! as! String)
-                                        
-                                        pages.append(page)
+//                                group.enter()
+                                
+                                var urlCommit = "https://api.github.com/repos/apple/swift/commits?path="
+                                urlCommit.append((o["path"] as? String)!)
+                                
+                                URL(string: urlCommit)?.asyncDownload { data, response, error in
+                                    guard
+                                        let dataCommit = data,
+                                        let dictCommit = (try? JSONSerialization.jsonObject(with: dataCommit)) as? [[String: Any]],
+                                        let author = dictCommit[0]["author"] as? [String: Any],
+                                        let commit = dictCommit[0]["commit"] as? [String: Any],
+                                        let authorName = commit["author"] as? [String: Any]
+                                        else {
+                                            print("error:", error ?? "nil")
+                                            return
                                     }
+                                    
+                                    let nameAndDate = authorName["name"]! as! String + "\n" + self.getDate(isoDate: authorName["date"] as! String)!
+                                        + "\n"
+                                    let commitAndPath = commit["message"]! as! String + "\n" + (o["path"]! as! String)
+                                    let page = Page(name: nameAndDate + commitAndPath, image: author["avatar_url"]! as! String)
+                                    
+                                    pages.append(page)
                                 }
                             }
                         }
@@ -83,8 +87,12 @@ class DataSet {
             }
         }
         
-        completionHandler(pages)
+        let deadlineTime = DispatchTime.now() + .seconds(5)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            completionHandler(pages)
+        }
     }
+
     
     func getDate(isoDate: String) -> String? {
         
