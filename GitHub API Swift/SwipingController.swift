@@ -59,8 +59,7 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
         }
         
         if checkIfLastPage() {
-//            let destVC = self.storyboard?.instantiateViewController(withIdentifier: "AreaValidationVC") as? AreaValidationVC
-//            self.present(destVC!, animated: true, completion: nil)
+            print("Last Commit")
         }
         else {
             let nextIndex = min(pageControl.currentPage + 1, pageArray.count - 1)

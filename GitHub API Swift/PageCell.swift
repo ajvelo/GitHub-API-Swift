@@ -21,7 +21,7 @@ class PageCell: UICollectionViewCell {
                 view.removeFromSuperview()
             }
             
-            let imageView = addImages(imageURL: unwrappedPage.image)
+            _ = addImages(imageURL: unwrappedPage.image)
 
             let attributedText = NSMutableAttributedString(string: unwrappedPage.name, attributes: [NSAttributedStringKey.font: UIFont(name: "AvenirNextCondensed-Medium", size: 18.0)!])
             attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: attributedText.length))

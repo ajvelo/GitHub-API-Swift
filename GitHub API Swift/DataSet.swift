@@ -52,11 +52,8 @@ class DataSet {
                                     print("error:", error ?? "nil")
                                     return
                             }
-//                            let group = DispatchGroup()
                             
                             for o in object {
-                                
-//                                group.enter()
                                 
                                 var urlCommit = "https://api.github.com/repos/apple/swift/commits?path="
                                 urlCommit.append((o["path"] as? String)!)
@@ -73,10 +70,10 @@ class DataSet {
                                             return
                                     }
                                     
-                                    let nameAndDate = authorName["name"]! as! String + "\n" + self.getDate(isoDate: authorName["date"] as! String)!
-                                        + "\n"
-                                    let commitAndPath = commit["message"]! as! String + "\n" + (o["path"]! as! String)
-                                    let page = Page(name: nameAndDate + commitAndPath, image: author["avatar_url"]! as! String)
+                                    let name = "Author: " + (authorName["name"]! as! String) + "\n"
+                                    let date = "Date: " + self.getDate(isoDate: authorName["date"] as! String)! + "\n"
+                                    let commitAndPath = "Commit message: " + (commit["message"]! as! String) + "\n\n" + "PATH: " + (o["path"]! as! String)
+                                    let page = Page(name: name + date + commitAndPath, image: author["avatar_url"]! as! String)
                                     
                                     pages.append(page)
                                 }
